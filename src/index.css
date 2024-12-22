@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.active {
+  color: #e9631a;
+  font-size: 18px;
+  
+}

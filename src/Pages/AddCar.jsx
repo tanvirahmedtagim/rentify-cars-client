@@ -1,11 +1,11 @@
 import React from 'react';
 
 const AddCar = () => {
-    return (
-        <div>
-            <h1>Add Car</h1>
-        </div>
-    );
+  return (
+    <div>
+      
+    </div>
+  );
 };
 
 export default AddCar;
