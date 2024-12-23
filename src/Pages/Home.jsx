@@ -16,7 +16,7 @@ const Home = () => {
       {/* User Testimonial */}
       <UserTestimonials></UserTestimonials>
 
-      {/* Specil offers */}
+      {/* Special offers */}
       <SpecialOffers></SpecialOffers>
     </div>
   );
