@@ -8,6 +8,7 @@ import MyBookings from "../Pages/MyBookings";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import PrivateRoute from "./PrivateRoute";
+import CarDetails from "../Pages/CarDetails";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,16 @@ const router = createBrowserRouter([
             <AddCar></AddCar>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/cars/:id",
+        element: (
+          <PrivateRoute>
+            <CarDetails></CarDetails>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/cars/${params.id}`),
       },
       {
         path: "/myCar",

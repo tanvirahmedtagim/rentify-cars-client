@@ -128,7 +128,10 @@ const MyCars = () => {
       ) : myCars.length === 0 ? (
         <div className="text-center">
           <p className="text-gray-600 mb-4">No cars added yet. Add one now!</p>
-          <Link to="/add-car" className="btn btn-primary">
+          <Link
+            to="/addCar"
+            className="btn bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600"
+          >
             Add a Car
           </Link>
         </div>
@@ -190,7 +193,9 @@ const MyCars = () => {
         className="bg-white lg:p-6 p-2 rounded-lg shadow-lg max-w-4xl w-11/12 mx-auto lg:mt-16 lg:mb-16"
         overlayClassName="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center"
       >
-        <h3 className="text-lg text-center font-bold mb-2">Update Car Details</h3>
+        <h3 className="text-lg text-center font-bold mb-2">
+          Update Car Details
+        </h3>
         {editingCar && (
           <form onSubmit={handleUpdateSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">

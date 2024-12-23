@@ -7,6 +7,7 @@ import {
   FaCheck,
   FaTimes,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const AvailableCars = () => {
   const [cars, setCars] = useState([]);
@@ -141,12 +142,12 @@ const AvailableCars = () => {
             </div>
 
             {/* Book Now Button */}
-            <button
+            <Link
+              to={`/cars/${car._id}`}
               className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600"
-              onClick={() => alert(`Booking ${car.carModel}`)}
             >
               Book Now
-            </button>
+            </Link>
           </div>
         ))}
       </div>
