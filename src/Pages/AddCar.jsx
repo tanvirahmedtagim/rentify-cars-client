@@ -21,11 +21,6 @@ const AddCar = () => {
     const imageUrl = form.imageUrl.value;
     const location = form.location.value;
 
-    // Additional fields
-    const addedBy = {
-      name: user?.displayName || "Anonymous",
-      email: user?.email || "unknown@example.com",
-    };
     const dateAdded = new Date().toISOString(); // Save the current date and time
     const bookingStatus = "Pending"; // Default booking status
 
@@ -39,8 +34,8 @@ const AddCar = () => {
       bookingCount,
       imageUrl,
       location,
-      addedBy,
       dateAdded,
+      email: user?.email,
       bookingStatus,
     };
 

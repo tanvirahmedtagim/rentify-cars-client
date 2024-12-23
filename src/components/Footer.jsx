@@ -139,8 +139,8 @@ const Footer = () => {
               +123-456-7890
             </p>
             <p>
-              <i className="fas fa-envelope text-orange-500 mr-2"></i>
-              contact@rentifycars.com
+              <i className="fas fa-envelope text-orange-500 mr-2 text-center"></i>
+              rentifycars@gmail.com
             </p>
           </div>
         </div>

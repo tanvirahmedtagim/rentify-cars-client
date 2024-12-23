@@ -84,7 +84,7 @@ const AvailableCars = () => {
       {/* Cars Display */}
       <div
         className={`grid ${
-          view === "grid" ? "grid-cols-3 gap-4" : "grid-cols-1"
+          view === "grid" ? "grid-cols-3 gap-4" : "grid-cols-1 gap-4"
         }`}
       >
         {sortedCars.map((car) => (
