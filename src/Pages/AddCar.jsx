@@ -2,27 +2,27 @@ import React, { useRef, useContext } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { AuthContext } from "../provider/AuthProvider";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const AddCar = () => {
   const formRef = useRef(null);
-  const { user } = useContext(AuthContext); // Getting user context for user details
-
+  const { user } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
   const handleAddCar = async (event) => {
     event.preventDefault();
     const form = event.target;
 
     const carModel = form.carModel.value;
     const rentalPrice = form.rentalPrice.value;
-    const availability = form.availability.value === "true"; // Convert to boolean
+    const availability = form.availability.value === "true";
     const registrationNumber = form.registrationNumber.value;
-    const features = form.features.value.split(","); // Split by commas for an array
+    const features = form.features.value.split(",");
     const description = form.description.value;
-    const bookingCount = 0; // Default value
+    const bookingCount = 0;
     const imageUrl = form.imageUrl.value;
     const location = form.location.value;
-
-    const dateAdded = new Date().toISOString(); // Save the current date and time
-    const bookingStatus = "Pending"; // Default booking status
+    const dateAdded = new Date().toISOString();
+    const bookingStatus = "Pending";
 
     const newCar = {
       carModel,
@@ -40,11 +40,15 @@ const AddCar = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/cars", newCar, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axiosSecure.post(
+        `/cars`,
+        newCar,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response.data.insertedId) {
         formRef.current.reset();

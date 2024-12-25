@@ -14,11 +14,12 @@ const AvailableCars = () => {
   const [view, setView] = useState("grid");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("");
+  console.log(cars);
 
   useEffect(() => {
     // Fetch all cars from the backend
     axios
-      .get("http://localhost:5000/cars")
+      .get(`${import.meta.env.VITE_API_URL}/cars`)
       .then((response) => setCars(response.data))
       .catch((error) => console.error("Error fetching cars:", error));
   }, []);
@@ -134,7 +135,7 @@ const AvailableCars = () => {
               </p>
               <p className="flex items-center text-gray-700">
                 <FaCar className="mr-2 text-purple-500" />
-                Booking Count: {car.bookingCount || 0}
+                Booking Count: {car.bookingCount}
               </p>
               <p className="text-gray-600">
                 {car.description || "No description available."}

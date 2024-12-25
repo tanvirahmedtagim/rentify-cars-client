@@ -76,15 +76,15 @@ const UserTestimonials = () => {
               />
               <div className="flex items-center space-x-1">
                 {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <span key={i} className="text-white text-3xl">
+                  <span key={i} className="text-black text-3xl">
                     ★
                   </span>
                 ))}
               </div>
-              <p className="text-center text-xl text-white italic">
+              <p className="text-center text-xl text-black italic">
                 "{testimonial.review}"
               </p>
-              <h3 className="text-2xl font-semibold text-white">
+              <h3 className="text-2xl font-semibold text-black">
                 {testimonial.name}
               </h3>
             </div>

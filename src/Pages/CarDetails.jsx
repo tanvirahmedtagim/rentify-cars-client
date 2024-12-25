@@ -1,19 +1,73 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useLoaderData, useParams } from "react-router-dom";
+import { AuthContext } from "../provider/AuthProvider";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { toast } from "react-toastify";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const CarDetails = () => {
+  const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const cars = useLoaderData();
   const [isModalOpen, setModalOpen] = useState(false);
+  const {
+    _id,
+    carModel,
+    rentalPrice,
+    availability,
+    features,
+    description,
+    bookingCount,
+    imageUrl,
+    location,
+    dateAdded,
+    email,
+    bookingStatus,
+  } = cars || {};
+
+  const handleMyBookings = () => {
+    const bookingItems = {
+      carModel,
+      rentalPrice,
+      imageUrl,
+      dateAdded,
+      email,
+      bookingStatus,
+      carId: _id,
+    };
+
+    axiosSecure
+      .post(`/myBooking`, bookingItems, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response.data.insertedId) {
+          Swal.fire({
+            title: "Success!",
+            text: "Booking successfully.",
+            icon: "success",
+            confirmButtonText: "Cool",
+          });
+          setModalOpen(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error adding to Bookings:", error);
+        toast.alert("An error occurred. Please try again.");
+      });
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="lg:w-11/12 mx-auto md:my-12 my-8">
-        <div className="card lg:card-side bg-gradient-to-r from-orange-500 to-yellow-500 text-white shadow-xl rounded-lg overflow-hidden">
+        <div className="card lg:card-side bg-gradient-to-b from-[#d67528] to-[#e0945e] text-black shadow-xl rounded-lg overflow-hidden">
           <figure className="w-full lg:w-1/2">
             <img
-              src={cars.imageUrl}
-              alt={cars.carModel}
+              src={imageUrl}
+              alt={carModel}
               className="object-cover w-full h-64 lg:h-full lg:w-full rounded-lg"
             />
           </figure>
@@ -21,20 +75,20 @@ const CarDetails = () => {
             <h2 className="card-title text-2xl lg:text-3xl font-semibold mb-2">
               {cars.carModel}
             </h2>
-            <p className="text-base lg:text-lg text-gray-100 mb-4">
-              Price Per Day: ${cars.rentalPrice}
+            <p className="text-base lg:text-lg text-black mb-4">
+              Price Per Day: ${rentalPrice}
             </p>
-            <p className="text-base lg:text-lg text-gray-100 mb-4">
-              Availability: {cars.availability ? "Available" : "Unavailable"}
+            <p className="text-bold lg:text-lg p-3 w-48 rounded-xl text-white bg-[#11ba11] mb-4">
+              Availability: {availability ? "Available" : "Unavailable"}
             </p>
             <h4 className="font-medium text-lg lg:text-xl mb-2">Features:</h4>
-            <ul className="list-disc pl-5 mb-4 text-gray-200">
-              {cars.features.map((feature, index) => (
+            <ul className="list-disc pl-5 mb-4 text-black">
+              {features.map((feature, index) => (
                 <li key={index}>{feature}</li>
               ))}
             </ul>
-            <p className="text-base lg:text-lg text-gray-200 mb-4">
-              {cars.description}
+            <p className="text-base lg:text-lg text-black mb-4">
+              {description}
             </p>
             <div className="card-actions justify-end">
               <button
@@ -56,18 +110,15 @@ const CarDetails = () => {
               Booking Confirmation
             </h3>
             <p className="mt-2 text-gray-700">
-              You are booking:{" "}
-              <span className="font-semibold">{cars.carModel}</span>
+              You are booking: <span className="font-semibold">{carModel}</span>
             </p>
+            <p className="mt-2 text-gray-700">Price Per Day: ${rentalPrice}</p>
             <p className="mt-2 text-gray-700">
-              Price Per Day: ${cars.rentalPrice}
-            </p>
-            <p className="mt-2 text-gray-700">
-              Availability: {cars.availability ? "Available" : "Unavailable"}
+              Availability: {availability ? "Available" : "Unavailable"}
             </p>
             <h4 className="font-medium mt-4 text-gray-800">Features:</h4>
             <ul className="list-disc pl-5 text-gray-600">
-              {cars.features.map((feature, index) => (
+              {features.map((feature, index) => (
                 <li key={index}>{feature}</li>
               ))}
             </ul>
@@ -78,7 +129,10 @@ const CarDetails = () => {
               >
                 Cancel
               </button>
-              <button className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">
+              <button
+                onClick={handleMyBookings}
+                className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700"
+              >
                 Confirm Booking
               </button>
             </div>

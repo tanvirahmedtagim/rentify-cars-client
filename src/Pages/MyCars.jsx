@@ -7,11 +7,13 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import Modal from "react-modal";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 // Set the app element for accessibility
 Modal.setAppElement("#root");
 
 const MyCars = () => {
+  const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
   const [myCars, setMyCars] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,10 +24,8 @@ const MyCars = () => {
   useEffect(() => {
     if (user?.email) {
       setLoading(true);
-      axios
-        .get(
-          `http://localhost:5000/myCars?email=${encodeURIComponent(user.email)}`
-        )
+      axiosSecure
+        .get(`/myCars?email=${user.email}`)
         .then((res) => {
           const cars = res.data;
           if (sortOption === "date-desc") {
@@ -54,7 +54,7 @@ const MyCars = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/myCars/${id}`).then((res) => {
+        axiosSecure.delete(`/myCars/${id}`).then((res) => {
           if (res.data.deletedCount > 0) {
             Swal.fire("Deleted!", "Your car has been deleted.", "success");
             setMyCars(myCars.filter((car) => car._id !== id));
@@ -87,19 +87,17 @@ const MyCars = () => {
       imageUrl,
       location,
     };
-    axios
-      .patch(`http://localhost:5000/myCars/${editingCar._id}`, updatedCar)
-      .then((res) => {
-        if (res.data.modifiedCount > 0) {
-          Swal.fire("Success", "Car details updated successfully!", "success");
-          setMyCars((prevCars) =>
-            prevCars.map((car) =>
-              car._id === editingCar._id ? { ...car, ...updatedCar } : car
-            )
-          );
-          setEditingCar(null);
-        }
-      });
+    axiosSecure.patch(`/myCars/${editingCar._id}`, updatedCar).then((res) => {
+      if (res.data.modifiedCount > 0) {
+        Swal.fire("Success", "Car details updated successfully!", "success");
+        setMyCars((prevCars) =>
+          prevCars.map((car) =>
+            car._id === editingCar._id ? { ...car, ...updatedCar } : car
+          )
+        );
+        setEditingCar(null);
+      }
+    });
   };
 
   return (
