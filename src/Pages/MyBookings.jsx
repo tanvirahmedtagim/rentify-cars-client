@@ -4,6 +4,28 @@ import axios from "axios";
 import { AuthContext } from "../provider/AuthProvider";
 import { FaCalendarAlt, FaTrash } from "react-icons/fa";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+// Register Chart.js components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const MyBookings = () => {
   const axiosSecure = useAxiosSecure();
@@ -38,7 +60,6 @@ const MyBookings = () => {
   const confirmCancelBooking = () => {
     if (!selectedBooking) return;
 
-    // Removing dateAdded as per your requirement
     axiosSecure
       .put(`/myBooking/${selectedBooking._id}`, {
         bookingStatus: "Canceled",
@@ -50,10 +71,7 @@ const MyBookings = () => {
         setBookings((prevBookings) =>
           prevBookings.map((b) =>
             b._id === selectedBooking._id
-              ? {
-                  ...b,
-                  bookingStatus: "Canceled",
-                }
+              ? { ...b, bookingStatus: "Canceled" }
               : b
           )
         );
@@ -97,6 +115,20 @@ const MyBookings = () => {
       .catch((error) => console.error("Error modifying booking:", error));
   };
 
+  // Prepare data for Chart.js (Daily Rental Price)
+  const chartData = {
+    labels: bookings.map((booking) => booking.carModel), // Car models as x-axis labels
+    datasets: [
+      {
+        label: "Daily Rental Price ($)",
+        data: bookings.map((booking) => booking.rentalPrice), // Rental prices
+        fill: false,
+        borderColor: "rgba(75,192,192,1)",
+        tension: 0.1,
+      },
+    ],
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center mt-40">
@@ -107,15 +139,18 @@ const MyBookings = () => {
 
   return (
     <div className="overflow-x-auto lg:w-11/12 mx-auto p-4">
+      {/* Render the chart */}
+      <div className="mb-6">
+        <h2 className="text-xl font-bold mb-4">Car Daily Rental Prices</h2>
+        <Line data={chartData} options={{ responsive: true }} />
+      </div>
+
       <table className="min-w-full table-auto border-collapse border border-gray-300">
         <thead className="bg-gray-200 text-left">
           <tr>
             <th className="p-4 border-b font-bold text-center">Car Image</th>
             <th className="p-4 border-b font-bold text-center">Car Model</th>
-            <th className="p-4 border-b font-bold text-center">
-              Booking Date
-            </th>{" "}
-            {/* New Booking Date column */}
+            <th className="p-4 border-b font-bold text-center">Booking Date</th>
             <th className="p-4 border-b font-bold text-center">Start Date</th>
             <th className="p-4 border-b font-bold text-center">End Date</th>
             <th className="p-4 border-b font-bold text-center">Total Price</th>
@@ -143,7 +178,7 @@ const MyBookings = () => {
               <td className="p-4 border-b text-center">{booking.carModel}</td>
               <td className="p-4 border-b text-center">
                 {booking.createdAt
-                  ? format(new Date(booking.createdAt), "dd-MM-yyyy HH:mm") // Display booking date
+                  ? format(new Date(booking.createdAt), "dd-MM-yyyy HH:mm")
                   : "N/A"}
               </td>
               <td className="p-4 border-b text-center">
@@ -187,7 +222,7 @@ const MyBookings = () => {
         </tbody>
       </table>
 
-      {/* Cancel Modal */}
+      {/* Cancel and Modify Modals */}
       {showCancelModal && (
         <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded shadow w-80 mx-auto p-6">
@@ -212,7 +247,6 @@ const MyBookings = () => {
         </div>
       )}
 
-      {/* Modify Date Modal */}
       {showModifyModal && (
         <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded shadow p-6">
