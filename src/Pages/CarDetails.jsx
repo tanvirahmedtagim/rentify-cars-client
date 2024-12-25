@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { AuthContext } from "../provider/AuthProvider";
 
 const CarDetails = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
+  const { user } = useContext(AuthContext);
   const [car, setCar] = useState(null);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -54,7 +56,6 @@ const CarDetails = () => {
 
   const {
     _id,
-    email,
     carModel,
     rentalPrice,
     availability,
@@ -72,7 +73,7 @@ const CarDetails = () => {
       carModel,
       rentalPrice,
       imageUrl,
-      email,
+      email: user?.email,
       dateAdded,
       bookingStatus,
       carId: _id,
@@ -106,6 +107,9 @@ const CarDetails = () => {
         toast.error("An error occurred. Please try again.");
       });
   };
+
+  // Determine if the booking button should be disabled in the modal
+  const isBookingButtonDisabled = !startDate || !endDate;
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -196,6 +200,7 @@ const CarDetails = () => {
               <button
                 onClick={handleMyBookings}
                 className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700"
+                disabled={isBookingButtonDisabled} // Disable the button if dates are not filled
               >
                 Confirm Booking
               </button>

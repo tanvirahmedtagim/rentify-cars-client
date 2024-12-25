@@ -253,6 +253,7 @@ const MyBookings = () => {
             <h2 className="text-lg font-bold mb-4">Modify Booking Dates</h2>
             <input
               type="datetime-local"
+              required
               className="border rounded p-2 w-full mb-4"
               onChange={(e) =>
                 setSelectedBooking((prev) => ({
@@ -263,6 +264,7 @@ const MyBookings = () => {
             />
             <input
               type="datetime-local"
+              required
               className="border rounded p-2 w-full mb-4"
               onChange={(e) =>
                 setSelectedBooking((prev) => ({
