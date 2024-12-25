@@ -1,10 +1,21 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/effect-fade";
+import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
-import "swiper/css/navigation";
-import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
+import "../App.css";
+
+// Import required modules from Swiper
+import {
+  EffectCoverflow,
+  Pagination,
+  Navigation,
+  Autoplay,
+} from "swiper/modules";
+
+// Initialize Swiper modules
+import SwiperCore from "swiper";
+SwiperCore.use([Autoplay]);
 
 const testimonials = [
   {
@@ -33,66 +44,83 @@ const testimonials = [
   },
 ];
 
-const UserTestimonials = () => {
-  const swiperRef = useRef(null);
-
-  useEffect(() => {
-    if (swiperRef.current) {
-      const swiperInstance = swiperRef.current.swiper;
-      swiperInstance.autoplay.start(); // Manually start autoplay
-    }
-  }, []);
-
-  return (
-    <div className="max-w-4xl mx-auto py-12 px-6">
-      <h2 className="text-center text-3xl font-semibold mb-8 text-gray-900">
-        What Our Customers Say
-      </h2>
-
-      <Swiper
-        ref={swiperRef}
-        spaceBetween={40}
-        centeredSlides={true}
-        loop={true}
-        autoplay={{
-          delay: 3000,
-          disableOnInteraction: false,
-        }}
-        effect="fade"
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
-        modules={[Navigation, Pagination, Autoplay, EffectFade]}
-        className="testimonial-carousel"
-      >
-        {testimonials.map((testimonial, index) => (
-          <SwiperSlide key={index}>
-            <div className="flex flex-col items-center space-y-6 p-6 bg-gradient-to-r from-orange-400 via-yellow-300 to-orange-400 rounded-xl shadow-xl transition-transform transform hover:scale-105">
-              <img
-                src={testimonial.image}
-                alt={testimonial.name}
-                className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
-              />
-              <div className="flex items-center space-x-1">
-                {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <span key={i} className="text-black text-3xl">
-                    ★
-                  </span>
-                ))}
-              </div>
-              <p className="text-center text-xl text-black italic">
-                "{testimonial.review}"
-              </p>
-              <h3 className="text-2xl font-semibold text-black">
-                {testimonial.name}
-              </h3>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </div>
-  );
+const renderStars = (rating) => {
+  const fullStars = "★".repeat(rating);
+  const emptyStars = "☆".repeat(5 - rating);
+  return fullStars + emptyStars;
 };
 
-export default UserTestimonials;
+export default function UserTestimonials() {
+  return (
+    <>
+      <section className="bg-white">
+        <div className="main my-16 flex flex-col justify-center">
+          <div className="head-p text-black text-center font-bold text-3xl">
+            <h1>What Our Customer Say</h1>
+          </div>
+          <div className="head text-white text-4xl font-semibold font-mono flex justify-center items-center">
+            TESTIMONIALS
+          </div>
+          <Swiper
+            loop={true}
+            pagination={{
+              clickable: true,
+            }}
+            autoplay={{ delay: 3000 }}
+            navigation={true}
+            modules={[EffectCoverflow, Pagination, Navigation]}
+            className="mySwiper w-4/5"
+            effect={"coverflow"}
+            coverflowEffect={{
+              rotate: 10,
+              stretch: 50,
+              depth: 200,
+              modifier: 1,
+              slideShadows: true,
+            }}
+            breakpoints={{
+              640: {
+                slidesPerView: 1,
+                spaceBetween: 20,
+              },
+              768: {
+                slidesPerView: 1,
+                spaceBetween: 30,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 150,
+              },
+            }}
+          >
+            {testimonials.map((testimonial, index) => (
+              <SwiperSlide
+                key={index}
+                className="swiper-slide bg-orange-500 text-white rounded-lg text-center font-mono"
+              >
+                <div className="px-5 pt-3">
+                  <div className="testimonials-profile-circle flex justify-center items-center pt-5">
+                    <img
+                      src={testimonial.image}
+                      alt="testimonial-avatar"
+                      className="testimonial-avatar w-24 h-24 border-4 border-[#1D8BA0] rounded-full"
+                    />
+                  </div>
+                  <p className="mt-4">{testimonial.review}</p>
+                  <div className="rating mt-1 text-xl">
+                    <span className="text-white">
+                      {renderStars(testimonial.rating)}
+                    </span>
+                  </div>
+                  <h6 className="review-by text-white text-lg mt-1">
+                    - {testimonial.name}
+                  </h6>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </section>
+    </>
+  );
+}

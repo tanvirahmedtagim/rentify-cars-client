@@ -41,11 +41,9 @@ const Register = () => {
       // Register the user
       const res = await handleRegister(email, password);
 
-
       // Sign out the user after registration
       await handleLogout();
 
-      
       // Update user profile
       await manageProfile(name, photo);
 
@@ -132,12 +130,6 @@ const Register = () => {
             </div>
             {error && <p className="text-red-500">{error}</p>}
           </form>
-          <p className="text-center pb-4">
-            Already Have An Account?
-            <Link className="font-bold" to="/login">
-              Login
-            </Link>
-          </p>
         </div>
       </div>
       <ToastContainer></ToastContainer>
