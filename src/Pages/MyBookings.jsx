@@ -18,7 +18,7 @@ const MyBookings = () => {
     if (user?.email) {
       setLoading(true);
       axiosSecure
-        .get(`/myBooking?email=${user?.email}`)
+        .get(`/myBooking/${user?.email}`)
         .then((response) => setBookings(response.data))
         .catch((error) => console.error("Error fetching bookings:", error))
         .finally(() => setLoading(false));
@@ -38,20 +38,21 @@ const MyBookings = () => {
   const confirmCancelBooking = () => {
     if (!selectedBooking) return;
 
-    // Update the booking status to canceled
+    // Removing dateAdded as per your requirement
     axiosSecure
       .put(`/myBooking/${selectedBooking._id}`, {
         bookingStatus: "Canceled",
-        dateAdded: new Date().toISOString(),
+        startDate: selectedBooking.startDate,
+        endDate: selectedBooking.endDate,
+        totalCost: selectedBooking.totalCost,
       })
-      .then((response) => {
+      .then(() => {
         setBookings((prevBookings) =>
           prevBookings.map((b) =>
             b._id === selectedBooking._id
               ? {
                   ...b,
                   bookingStatus: "Canceled",
-                  dateAdded: new Date().toISOString(),
                 }
               : b
           )
@@ -62,19 +63,32 @@ const MyBookings = () => {
       .catch((error) => console.error("Error canceling booking:", error));
   };
 
-  const confirmModifyBooking = (newDate) => {
-    if (!selectedBooking || !newDate) return;
+  const confirmModifyBooking = (dates) => {
+    if (!selectedBooking || !dates.startDate || !dates.endDate) return;
 
-    // Update the booking with the new date
+    const start = new Date(dates.startDate);
+    const end = new Date(dates.endDate);
+    const totalDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+    const totalCost = selectedBooking.rentalPrice * totalDays;
+
     axiosSecure
       .put(`/myBooking/${selectedBooking._id}`, {
+        startDate: dates.startDate,
+        endDate: dates.endDate,
+        totalCost,
         bookingStatus: selectedBooking.bookingStatus,
-        dateAdded: newDate,
       })
-      .then((response) => {
+      .then(() => {
         setBookings((prevBookings) =>
           prevBookings.map((b) =>
-            b._id === selectedBooking._id ? { ...b, dateAdded: newDate } : b
+            b._id === selectedBooking._id
+              ? {
+                  ...b,
+                  startDate: dates.startDate,
+                  endDate: dates.endDate,
+                  totalCost,
+                }
+              : b
           )
         );
         setShowModifyModal(false);
@@ -98,7 +112,12 @@ const MyBookings = () => {
           <tr>
             <th className="p-4 border-b font-bold text-center">Car Image</th>
             <th className="p-4 border-b font-bold text-center">Car Model</th>
-            <th className="p-4 border-b font-bold text-center">Booking Date</th>
+            <th className="p-4 border-b font-bold text-center">
+              Booking Date
+            </th>{" "}
+            {/* New Booking Date column */}
+            <th className="p-4 border-b font-bold text-center">Start Date</th>
+            <th className="p-4 border-b font-bold text-center">End Date</th>
             <th className="p-4 border-b font-bold text-center">Total Price</th>
             <th className="p-4 border-b font-bold text-center">
               Booking Status
@@ -114,7 +133,7 @@ const MyBookings = () => {
                 index % 2 === 0 ? "bg-white" : "bg-gray-50"
               }`}
             >
-              <td className="lg:mt-12  border-b items-center justify-center flex">
+              <td className="border-b items-center justify-center flex">
                 <img
                   src={booking.imageUrl}
                   alt={booking.carModel}
@@ -123,16 +142,20 @@ const MyBookings = () => {
               </td>
               <td className="p-4 border-b text-center">{booking.carModel}</td>
               <td className="p-4 border-b text-center">
-                {booking.dateAdded
-                  ? format(new Date(booking.dateAdded), "dd-MM-yyyy HH:mm")
-                  : "Invalid Date"}
+                {booking.createdAt
+                  ? format(new Date(booking.createdAt), "dd-MM-yyyy HH:mm") // Display booking date
+                  : "N/A"}
               </td>
               <td className="p-4 border-b text-center">
-                ${booking.rentalPrice}
+                {format(new Date(booking.startDate), "dd-MM-yyyy HH:mm")}
               </td>
+              <td className="p-4 border-b text-center">
+                {format(new Date(booking.endDate), "dd-MM-yyyy HH:mm")}
+              </td>
+              <td className="p-4 border-b text-center">${booking.totalCost}</td>
               <td className="p-4 border-b text-center">
                 <span
-                  className={`px-2 py-1 rounded text-center ${
+                  className={`px-2 py-1 rounded ${
                     booking.bookingStatus === "Confirmed"
                       ? "bg-green-100 text-green-800"
                       : booking.bookingStatus === "Pending"
@@ -143,18 +166,17 @@ const MyBookings = () => {
                   {booking.bookingStatus}
                 </span>
               </td>
-              <td className="flex lg:text-base md:text-xs justify-center items-start lg:mb-14   gap-2 md:mb-6 ">
+              <td className="flex justify-center gap-2">
                 <button
                   onClick={() => handleModifyBooking(booking)}
-                  className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold  py-2 lg:px-4 px-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+                  className="flex items-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                 >
                   <FaCalendarAlt className="h-5 w-5 mr-2" />
-                  Modify Date
+                  Modify Dates
                 </button>
-
                 <button
                   onClick={() => handleCancelBooking(booking)}
-                  className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
+                  className="flex items-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
                 >
                   <FaTrash className="h-5 w-5 mr-2" />
                   Cancel
@@ -168,7 +190,7 @@ const MyBookings = () => {
       {/* Cancel Modal */}
       {showCancelModal && (
         <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded shadow w-11/12 md:w-80 mx-auto p-6">
+          <div className="bg-white rounded shadow w-80 mx-auto p-6">
             <h2 className="text-lg font-bold mb-4">
               Are you sure you want to cancel this booking?
             </h2>
@@ -194,20 +216,35 @@ const MyBookings = () => {
       {showModifyModal && (
         <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded shadow p-6">
-            <h2 className="text-lg font-bold mb-4">Modify Booking Date</h2>
+            <h2 className="text-lg font-bold mb-4">Modify Booking Dates</h2>
             <input
               type="datetime-local"
               className="border rounded p-2 w-full mb-4"
               onChange={(e) =>
                 setSelectedBooking((prev) => ({
                   ...prev,
-                  newDate: e.target.value,
+                  startDate: e.target.value,
+                }))
+              }
+            />
+            <input
+              type="datetime-local"
+              className="border rounded p-2 w-full mb-4"
+              onChange={(e) =>
+                setSelectedBooking((prev) => ({
+                  ...prev,
+                  endDate: e.target.value,
                 }))
               }
             />
             <div className="flex space-x-4">
               <button
-                onClick={() => confirmModifyBooking(selectedBooking?.newDate)}
+                onClick={() =>
+                  confirmModifyBooking({
+                    startDate: selectedBooking?.startDate,
+                    endDate: selectedBooking?.endDate,
+                  })
+                }
                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
               >
                 Confirm

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import logo from "../assets/logo1.jpg";
+import logo from "../assets/logo1.png";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Navbar = () => {
@@ -46,7 +46,7 @@ const Navbar = () => {
   return (
     <div>
       <div className="navbar bg-base-100 lg:w-11/12 mx-auto">
-        <div className="navbar-start lg:w-[20%]">
+        <div className="w-full flex justify-between lg:justify-start lg:w-[20%]">
           <div className="dropdown z-50">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
@@ -71,11 +71,14 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          <Link className="h-10" to="/">
-            <img className="h-full" src={logo} alt="" />{" "}
+          <Link className="h-10 flex" to="/">
+            <img className="h-full" src={logo} alt="" />
+            <p className="font-semibold text-lg pt-2">
+              <span className="text-orange-500">R</span>entify Cars
+            </p>
           </Link>
         </div>
-        <div className="navbar-center hidden lg:flex  items-center  lg:w-[80%]">
+        <div className=" hidden lg:flex  items-center  lg:w-[80%]">
           <ul className="menu menu-horizontal gap-5 pl-64 text-lg px-1  ">
             {links}
           </ul>

@@ -1,40 +1,85 @@
-import React, { useContext, useState } from "react";
-import { useLoaderData, useParams } from "react-router-dom";
-import { AuthContext } from "../provider/AuthProvider";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import axios from "axios";
 import { toast } from "react-toastify";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const CarDetails = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
-  const cars = useLoaderData();
+  const [car, setCar] = useState(null);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [totalCost, setTotalCost] = useState(0);
+  const navigate = useNavigate();
   const [isModalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchCarDetails = async () => {
+      try {
+        const response = await axiosSecure.get(`/cars/${id}`);
+        setCar(response.data);
+      } catch (error) {
+        console.error("Error fetching car details:", error);
+        toast.error("Failed to load car details. Please try again.");
+      }
+    };
+
+    fetchCarDetails();
+  }, [id, axiosSecure]);
+
+  const calculateTotalCost = () => {
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const diffTime = Math.max(end - start, 0); // Ensure no negative value
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Convert to days
+      setTotalCost(diffDays * car.rentalPrice);
+    } else {
+      setTotalCost(0);
+    }
+  };
+
+  useEffect(() => {
+    calculateTotalCost();
+  }, [startDate, endDate, car]);
+
+  if (!car) {
+    return (
+      <div className="flex justify-center items-center mt-40">
+        <span className="loading loading-spinner text-info loading-lg"></span>;
+      </div>
+    );
+  }
+
   const {
     _id,
+    email,
     carModel,
     rentalPrice,
     availability,
     features,
-    description,
-    bookingCount,
-    imageUrl,
-    location,
     dateAdded,
-    email,
+    description,
+    imageUrl,
     bookingStatus,
-  } = cars || {};
+  } = car;
 
   const handleMyBookings = () => {
+    const createdAt = new Date().toISOString();
+
     const bookingItems = {
       carModel,
       rentalPrice,
       imageUrl,
-      dateAdded,
       email,
+      dateAdded,
       bookingStatus,
       carId: _id,
+      startDate,
+      endDate,
+      totalCost,
+      createdAt,
     };
 
     axiosSecure
@@ -51,12 +96,14 @@ const CarDetails = () => {
             icon: "success",
             confirmButtonText: "Cool",
           });
+
           setModalOpen(false);
         }
+        navigate("/availableCars");
       })
       .catch((error) => {
         console.error("Error adding to Bookings:", error);
-        toast.alert("An error occurred. Please try again.");
+        toast.error("An error occurred. Please try again.");
       });
   };
 
@@ -73,7 +120,7 @@ const CarDetails = () => {
           </figure>
           <div className="card-body w-full lg:w-1/2 p-4 lg:p-6">
             <h2 className="card-title text-2xl lg:text-3xl font-semibold mb-2">
-              {cars.carModel}
+              {carModel}
             </h2>
             <p className="text-base lg:text-lg text-black mb-4">
               Price Per Day: ${rentalPrice}
@@ -93,7 +140,7 @@ const CarDetails = () => {
             <div className="card-actions justify-end">
               <button
                 onClick={() => setModalOpen(true)}
-                className="btn btn-block px-6 py-3 text-lg font-semibold rounded-lg  bg-white bg-opacity-75 text-gray-800  hover:bg-opacity-90"
+                className="btn btn-block px-6 py-3 text-lg font-semibold rounded-lg bg-white bg-opacity-75 text-gray-800 hover:bg-opacity-90"
               >
                 Book Now
               </button>
@@ -104,7 +151,7 @@ const CarDetails = () => {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white rounded-lg shadow-lg p-6 w-1/3">
             <h3 className="text-lg font-bold text-gray-800">
               Booking Confirmation
@@ -116,12 +163,29 @@ const CarDetails = () => {
             <p className="mt-2 text-gray-700">
               Availability: {availability ? "Available" : "Unavailable"}
             </p>
-            <h4 className="font-medium mt-4 text-gray-800">Features:</h4>
-            <ul className="list-disc pl-5 text-gray-600">
-              {features.map((feature, index) => (
-                <li key={index}>{feature}</li>
-              ))}
-            </ul>
+
+            <div className="mt-4">
+              <label className="block text-gray-700 mb-2">Start Date:</label>
+              <input
+                type="date"
+                className="border border-gray-300 rounded w-full px-3 py-2 mb-3"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+
+              <label className="block text-gray-700 mb-2">End Date:</label>
+              <input
+                type="date"
+                className="border border-gray-300 rounded w-full px-3 py-2"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+            </div>
+
+            <p className="mt-4 text-gray-800 font-semibold">
+              Total Cost: ${totalCost}
+            </p>
+
             <div className="mt-6 flex justify-end">
               <button
                 onClick={() => setModalOpen(false)}

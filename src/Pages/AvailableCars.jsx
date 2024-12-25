@@ -14,7 +14,6 @@ const AvailableCars = () => {
   const [view, setView] = useState("grid");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("");
-  console.log(cars);
 
   useEffect(() => {
     // Fetch all cars from the backend
@@ -51,16 +50,16 @@ const AvailableCars = () => {
   return (
     <div className="p-4">
       {/* Search, Sort, and Toggle Controls */}
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex md:flex-row flex-col gap-3 justify-between items-center md:mb-4">
         {/* Search Bar */}
         <input
           type="text"
           placeholder="Search by car model or location"
-          className="border p-2 rounded w-1/2"
+          className="border p-2 w-full rounded md:w-1/2"
           onChange={(e) => setSearchQuery(e.target.value)}
         />
 
-        <div className="flex space-x-2">
+        <div className="flex md:flex-row flex-col justify-end gap-3 w-full md:w-1/2 md:space-x-2">
           {/* Sort Dropdown */}
           <select
             onChange={(e) => setSortOption(e.target.value)}
@@ -86,7 +85,9 @@ const AvailableCars = () => {
       {/* Cars Display */}
       <div
         className={`grid ${
-          view === "grid" ? "grid-cols-3 gap-4" : "grid-cols-1 gap-4"
+          view === "grid"
+            ? "lg:grid-cols-3 md:grid-cols-2 gap-4"
+            : "grid-cols-1 gap-4"
         }`}
       >
         {sortedCars.map((car) => (

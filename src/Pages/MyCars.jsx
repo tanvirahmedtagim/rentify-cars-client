@@ -25,7 +25,7 @@ const MyCars = () => {
     if (user?.email) {
       setLoading(true);
       axiosSecure
-        .get(`/myCars?email=${user.email}`)
+        .get(`/myCars/${user.email}`)
         .then((res) => {
           const cars = res.data;
           if (sortOption === "date-desc") {

@@ -5,9 +5,9 @@ const Banner = () => {
   return (
     <div className="relative w-full h-screen">
       {/* Background Image/Video */}
-      <div className="absolute inset-0">
+      <div className="absolute w-full inset-0">
         <img
-          src="https://i.ibb.co.com/zf7pWP5/banner.jpg"
+          src="https://i.ibb.co.com/4pq9rKj/car3.jpg"
           alt="Premium Cars"
           className="w-full h-full object-cover"
         />
@@ -23,7 +23,7 @@ const Banner = () => {
 
       {/* Content Overlay */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full bg-black bg-opacity-50">
-        <h1 className="text-4xl md:text-6xl font-bold text-white text-center drop-shadow-lg">
+        <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold text-white text-center drop-shadow-lg">
           Drive Your Dreams Today!
         </h1>
         <Link

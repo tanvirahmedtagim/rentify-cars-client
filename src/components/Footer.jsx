@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from '../assets/logo1.png'
 import {
   FaFacebookF,
   FaInstagram,
@@ -11,12 +12,16 @@ const Footer = () => {
   return (
     <div className="sticky mt-6 top-[100vh]">
       <footer className="bg-black text-gray-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h2 className="text-orange-500 text-2xl font-bold mb-4">
-              Rentify Cars
-            </h2>
+            <div className="flex h-12 gap-2 items-center">
+              <img className="h-full"  src={logo} alt="" />
+              <h2 className=" lg:text-2xl mt-4 text-white font-bold mb-4">
+                <span className="text-orange-500">R</span>entify 
+                <span className="text-orange-500">C</span>ars
+              </h2>
+            </div>
             <p className="mb-4">
               Your trusted partner for convenient and reliable car rentals.
               Explore our seamless booking experience tailored to your needs.
