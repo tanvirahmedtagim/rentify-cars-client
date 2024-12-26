@@ -52,7 +52,6 @@ const AuthProvider = ({ children }) => {
           },
           { withCredentials: true }
         );
-        console.log(data);
       } else {
         setUser(currentUser);
         const { data } = await axios.get(

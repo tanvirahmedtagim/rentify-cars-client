@@ -28,7 +28,7 @@ const Banner = () => {
         </h1>
         <Link
           to="/availableCars"
-          className="mt-6 px-8 py-4 text-lg font-semibold text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-500 transition-all"
+          className="mt-6 px-6 py-3 text-base font-medium text-white bg-orange-500 rounded-md shadow-md hover:bg-orange-400 transition-all sm:px-8 sm:py-4 sm:text-lg md:rounded-lg"
         >
           View Available Cars
         </Link>
