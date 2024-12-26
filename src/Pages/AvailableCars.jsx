@@ -40,10 +40,16 @@ const AvailableCars = () => {
       return (a.carModel || "").localeCompare(b.carModel || "");
     if (sortOption === "location")
       return (a.location || "").localeCompare(b.location || "");
-    if (sortOption === "rentalPrice")
+    if (sortOption === "rentalPriceAsc")
       return (a.rentalPrice || 0) - (b.rentalPrice || 0);
+    if (sortOption === "rentalPriceDesc")
+      return (b.rentalPrice || 0) - (a.rentalPrice || 0);
+    if (sortOption === "dateAddedNewest")
+      return new Date(b.dateAdded) - new Date(a.dateAdded);
+    if (sortOption === "dateAddedOldest")
+      return new Date(a.dateAdded) - new Date(b.dateAdded);
     if (sortOption === "bookingCount")
-      return (b.bookingCount || 0) - (a.bookingCount || 0); 
+      return (b.bookingCount || 0) - (a.bookingCount || 0);
     return 0;
   });
 
@@ -68,7 +74,10 @@ const AvailableCars = () => {
             <option value="">Sort By</option>
             <option value="carModel">Car Model</option>
             <option value="location">Location</option>
-            <option value="rentalPrice">Rental Price</option>
+            <option value="rentalPriceAsc">Price: Lowest First</option>
+            <option value="rentalPriceDesc">Price: Highest First</option>
+            <option value="dateAddedNewest">Date Added: Newest First</option>
+            <option value="dateAddedOldest">Date Added: Oldest First</option>
             <option value="bookingCount">Booking Count</option>
           </select>
 
