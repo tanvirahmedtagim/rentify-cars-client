@@ -114,7 +114,7 @@ const CarDetails = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="lg:w-11/12 mx-auto md:my-12 my-8">
-        <div className="card lg:card-side bg-gradient-to-b from-[#d67528] to-[#e0945e] text-black shadow-xl rounded-lg overflow-hidden">
+        <div className="card md:card-side bg-gradient-to-b from-[#d67528] to-[#e0945e] text-black shadow-xl rounded-lg overflow-hidden">
           <figure className="w-full lg:w-1/2">
             <img
               src={imageUrl}

@@ -47,6 +47,12 @@ const Navbar = () => {
     <div>
       <div className="navbar bg-base-100 lg:w-11/12 mx-auto">
         <div className="w-full flex justify-between lg:justify-start lg:w-[20%]">
+          <Link className="h-10 flex" to="/">
+            <img className="h-full" src={logo} alt="" />
+            <p className="font-semibold text-lg pt-2">
+              <span className="text-orange-500">R</span>entify Cars
+            </p>
+          </Link>
           <div className="dropdown z-50">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
@@ -66,17 +72,11 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu menu-sm right-0 dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               {links}
             </ul>
           </div>
-          <Link className="h-10 flex" to="/">
-            <img className="h-full" src={logo} alt="" />
-            <p className="font-semibold text-lg pt-2">
-              <span className="text-orange-500">R</span>entify Cars
-            </p>
-          </Link>
         </div>
         <div className=" hidden lg:flex  items-center  lg:w-[80%]">
           <ul className="menu menu-horizontal gap-5 pl-64 text-lg px-1  ">

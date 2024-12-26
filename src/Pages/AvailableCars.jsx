@@ -43,7 +43,7 @@ const AvailableCars = () => {
     if (sortOption === "rentalPrice")
       return (a.rentalPrice || 0) - (b.rentalPrice || 0);
     if (sortOption === "bookingCount")
-      return (b.bookingCount || 0) - (a.bookingCount || 0); // Descending for popularity
+      return (b.bookingCount || 0) - (a.bookingCount || 0); 
     return 0;
   });
 

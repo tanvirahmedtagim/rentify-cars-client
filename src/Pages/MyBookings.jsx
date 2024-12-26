@@ -115,13 +115,12 @@ const MyBookings = () => {
       .catch((error) => console.error("Error modifying booking:", error));
   };
 
-  // Prepare data for Chart.js (Daily Rental Price)
   const chartData = {
-    labels: bookings.map((booking) => booking.carModel), // Car models as x-axis labels
+    labels: bookings.map((booking) => booking.carModel), 
     datasets: [
       {
         label: "Daily Rental Price ($)",
-        data: bookings.map((booking) => booking.rentalPrice), // Rental prices
+        data: bookings.map((booking) => booking.rentalPrice), 
         fill: false,
         borderColor: "rgba(75,192,192,1)",
         tension: 0.1,
@@ -141,7 +140,7 @@ const MyBookings = () => {
     <div className="overflow-x-auto lg:w-11/12 mx-auto p-4">
       {/* Render the chart */}
       <div className="mb-6">
-        <h2 className="text-xl font-bold mb-4">Car Daily Rental Prices</h2>
+        <h2 className="text-xl text-center font-bold mb-4">Car Daily Rental Prices Chart</h2>
         <Line data={chartData} options={{ responsive: true }} />
       </div>
 
