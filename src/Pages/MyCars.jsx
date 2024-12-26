@@ -188,14 +188,14 @@ const MyCars = () => {
         onRequestClose={() => setEditingCar(null)}
         contentLabel="Edit Car Details"
         className="bg-white lg:p-6 p-2 rounded-lg shadow-lg max-w-4xl w-11/12 mx-auto lg:mt-16 lg:mb-16"
-        overlayClassName="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center"
+        overlayClassName="fixed z-50 inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center"
       >
         <h3 className="text-lg text-center font-bold mb-2">
           Update Car Details
         </h3>
         {editingCar && (
           <form onSubmit={handleUpdateSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-2 gap-4 md:mb-4">
               <div>
                 <label className="block text-sm font-medium mb-1">
                   Car Model
@@ -218,6 +218,17 @@ const MyCars = () => {
                   className="input input-bordered w-full"
                 />
               </div>
+              <div className="col-span-2 md:col-span-1">
+                <label className="block text-sm font-medium mb-1">
+                  Registration Number
+                </label>
+                <input
+                  type="text"
+                  name="registrationNumber"
+                  defaultValue={editingCar.registrationNumber}
+                  className="input input-bordered w-full"
+                />
+              </div>
               <div>
                 <label className="block text-sm font-medium mb-1">
                   Availability
@@ -233,17 +244,7 @@ const MyCars = () => {
                   <option value="unavailable">Unavailable</option>
                 </select>
               </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Registration Number
-                </label>
-                <input
-                  type="text"
-                  name="registrationNumber"
-                  defaultValue={editingCar.registrationNumber}
-                  className="input input-bordered w-full"
-                />
-              </div>
+
               <div className="col-span-1 md:col-span-2">
                 <label className="block text-sm font-medium mb-1">
                   Features
@@ -255,7 +256,7 @@ const MyCars = () => {
                 ></textarea>
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">
+                <label className="block text-sm font-medium md:mb-1">
                   Image URL
                 </label>
                 <input
@@ -266,7 +267,7 @@ const MyCars = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1">
+                <label className="block text-sm font-medium md:mb-1">
                   Location
                 </label>
                 <input
@@ -277,17 +278,15 @@ const MyCars = () => {
                 />
               </div>
             </div>
-            <div className="mb-1">
-              <label className="block text-sm font-medium mb-1">
-                Description
-              </label>
+            <div className="md:mb-1">
+              <label className="block text-sm font-medium">Description</label>
               <textarea
                 name="description"
                 defaultValue={editingCar.description}
                 className="textarea textarea-bordered w-full"
               ></textarea>
             </div>
-            <div className="flex justify-end gap-4">
+            <div className="flex justify-end gap-2 md:gap-4">
               <button
                 type="button"
                 onClick={() => setEditingCar(null)}
