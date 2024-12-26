@@ -39,14 +39,14 @@ const WhyChooseUs = () => {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="relative bg-gradient-to-r from-orange-300 to-yellow-200 text-black p-6 rounded-xl shadow-lg transform transition hover:scale-105 hover:shadow-2xl"
+                className="relative bg-gradient-to-b from-orange-500 to-[#df8747] text-black p-6 rounded-xl shadow-lg transform transition hover:scale-105 hover:shadow-2xl"
               >
                 <div className="flex items-center justify-center bg-white text-orange-500 w-16 h-16 rounded-full shadow-lg mb-4 mx-auto">
                   <span className="text-3xl">{feature.icon}</span>
                 </div>
-                <h3 className="text-lg font-semibold mb-4">{feature.title}</h3>
+                <h3 className="text-xl font-semibold mb-4">{feature.title}</h3>
                 <div className="w-16 h-1 bg-white mx-auto mb-4 rounded"></div>
-                <p className="text-sm leading-relaxed">{feature.description}</p>
+                <p className="text-lg leading-relaxed">{feature.description}</p>
               </div>
             ))}
           </div>

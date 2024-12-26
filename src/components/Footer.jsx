@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from '../assets/logo1.png'
+import logo from "../assets/logo1.png";
 import {
   FaFacebookF,
   FaInstagram,
@@ -12,13 +12,13 @@ const Footer = () => {
   return (
     <div className="sticky mt-6 top-[100vh]">
       <footer className="bg-black text-gray-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:text-start text-center">
           {/* Company Info */}
           <div>
-            <div className="flex h-12 gap-2 items-center">
-              <img className="h-full"  src={logo} alt="" />
+            <div className="flex h-12 gap-2 md:justify-start justify-center  items-center">
+              <img className="h-full" src={logo} alt="" />
               <h2 className=" lg:text-2xl mt-4 text-white font-bold mb-4">
-                <span className="text-orange-500">R</span>entify 
+                <span className="text-orange-500">R</span>entify
                 <span className="text-orange-500">C</span>ars
               </h2>
             </div>
@@ -26,7 +26,7 @@ const Footer = () => {
               Your trusted partner for convenient and reliable car rentals.
               Explore our seamless booking experience tailored to your needs.
             </p>
-            <div className="flex space-x-4">
+            <div className="flex md:justify-start justify-center space-x-4">
               <Link
                 to="#"
                 className="text-orange-500 hover:text-orange-400 text-2xl"
