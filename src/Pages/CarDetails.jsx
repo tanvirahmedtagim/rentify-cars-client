@@ -34,8 +34,8 @@ const CarDetails = () => {
     if (startDate && endDate) {
       const start = new Date(startDate);
       const end = new Date(endDate);
-      const diffTime = Math.max(end - start, 0); // Ensure no negative value
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Convert to days
+      const diffTime = Math.max(end - start, 0);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       setTotalCost(diffDays * car.rentalPrice);
     } else {
       setTotalCost(0);
@@ -75,7 +75,7 @@ const CarDetails = () => {
       imageUrl,
       email: user?.email,
       dateAdded,
-      bookingStatus,
+      bookingStatus: "Confirmed",
       carId: _id,
       startDate,
       endDate,
