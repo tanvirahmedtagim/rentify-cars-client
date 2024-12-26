@@ -203,6 +203,7 @@ const MyCars = () => {
                 <input
                   type="text"
                   name="carModel"
+                  required
                   defaultValue={editingCar.carModel}
                   className="input input-bordered w-full"
                 />
@@ -214,6 +215,7 @@ const MyCars = () => {
                 <input
                   type="number"
                   name="rentalPrice"
+                  required
                   defaultValue={editingCar.rentalPrice || ""}
                   className="input input-bordered w-full"
                 />
@@ -225,6 +227,7 @@ const MyCars = () => {
                 <input
                   type="text"
                   name="registrationNumber"
+                  required
                   defaultValue={editingCar.registrationNumber}
                   className="input input-bordered w-full"
                 />
@@ -235,6 +238,7 @@ const MyCars = () => {
                 </label>
                 <select
                   name="availability"
+                  required
                   defaultValue={
                     editingCar.availability ? "available" : "unavailable"
                   }
@@ -251,6 +255,7 @@ const MyCars = () => {
                 </label>
                 <textarea
                   name="features"
+                  required
                   defaultValue={editingCar.features}
                   className="textarea textarea-bordered w-full"
                 ></textarea>
@@ -262,6 +267,7 @@ const MyCars = () => {
                 <input
                   type="url"
                   name="imageUrl"
+                  required
                   defaultValue={editingCar.imageUrl}
                   className="input input-bordered w-full"
                 />
@@ -273,6 +279,7 @@ const MyCars = () => {
                 <input
                   type="text"
                   name="location"
+                  required
                   defaultValue={editingCar.location}
                   className="input input-bordered w-full"
                 />
@@ -282,6 +289,7 @@ const MyCars = () => {
               <label className="block text-sm font-medium">Description</label>
               <textarea
                 name="description"
+                required
                 defaultValue={editingCar.description}
                 className="textarea textarea-bordered w-full"
               ></textarea>
