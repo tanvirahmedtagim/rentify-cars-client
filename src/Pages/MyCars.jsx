@@ -9,7 +9,6 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import Modal from "react-modal";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 
-// Set the app element for accessibility
 Modal.setAppElement("#root");
 
 const MyCars = () => {
@@ -33,9 +32,9 @@ const MyCars = () => {
           } else if (sortOption === "date-asc") {
             cars.sort((a, b) => new Date(a.dateAdded) - new Date(b.dateAdded));
           } else if (sortOption === "price-asc") {
-            cars.sort((a, b) => a.dailyRentalPrice - b.dailyRentalPrice);
+            cars.sort((a, b) => a.rentalPrice - b.rentalPrice);
           } else if (sortOption === "price-desc") {
-            cars.sort((a, b) => b.dailyRentalPrice - a.dailyRentalPrice);
+            cars.sort((a, b) => b.rentalPrice - a.rentalPrice);
           }
           setMyCars(cars);
         })
