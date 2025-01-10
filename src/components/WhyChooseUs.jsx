@@ -30,8 +30,8 @@ const WhyChooseUs = () => {
   return (
     <div>
       {" "}
-      <section className="bg-gray-100 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="w-11/12 mx-auto bg-gray-100 py-12">
+        <div className="mx-auto text-center">
           <h2 className="text-3xl font-bold mb-8 text-gray-800">
             Why Choose Us?
           </h2>

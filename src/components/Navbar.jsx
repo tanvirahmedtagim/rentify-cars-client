@@ -45,7 +45,7 @@ const Navbar = () => {
   );
   return (
     <div>
-      <div className="navbar bg-base-100 lg:w-11/12 mx-auto">
+      <div className="navbar p-0 bg-base-100 lg:w-11/12 mx-auto">
         <div className="w-full flex justify-between lg:justify-start lg:w-[20%]">
           <Link className="h-10 flex" to="/">
             <img className="h-full" src={logo} alt="" />
