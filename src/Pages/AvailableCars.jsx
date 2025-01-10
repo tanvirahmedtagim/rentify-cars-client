@@ -95,7 +95,7 @@ const AvailableCars = () => {
       <div
         className={`grid ${
           view === "grid"
-            ? "lg:grid-cols-3 md:grid-cols-2 gap-4"
+            ? "lg:grid-cols-4 md:grid-cols-2 gap-4"
             : "grid-cols-1 gap-4"
         }`}
       >

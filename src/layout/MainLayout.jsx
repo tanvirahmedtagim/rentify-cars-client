@@ -16,8 +16,11 @@ const MainLayout = () => {
     </div>
   ) : (
     <div className="min-h-screen">
-      <Navbar />
-      <div>
+      <div className="fixed z-40 w-full top-0 bg-orange-500 text-white font-semibold backdrop-blur-md">
+        <Navbar />
+      </div>
+
+      <div className="mt-[65px] w-11/12 mx-auto">
         <Outlet />
       </div>
       <Footer />

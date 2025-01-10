@@ -302,7 +302,10 @@ const MyCars = () => {
               >
                 Cancel
               </button>
-              <button type="submit" className="btn btn-primary">
+              <button
+                type="submit"
+                className="btn bg-orange-500 hover:bg-orange-600 text-white"
+              >
                 Save Changes
               </button>
             </div>

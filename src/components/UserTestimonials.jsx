@@ -42,14 +42,12 @@ const renderStars = (rating) => {
 export default function UserTestimonials() {
   return (
     <>
-      <section className="w-11/12 mx-auto bg-white mb-8">
+      <section className=" mt-12">
         <div className="main gap-4 flex flex-col justify-center">
-          <div className="head-p text-black text-center font-bold text-3xl">
+          <div className="head-p text-black text-center font-bold text-3xl mb-4">
             <h1>What Our Customers Say</h1>
           </div>
-          <div className="head text-orange-500 text-4xl font-semibold font-mono flex justify-center items-center mb-4">
-            TESTIMONIALS
-          </div>
+
           <Swiper
             slidesPerView={4}
             spaceBetween={30}

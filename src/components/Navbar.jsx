@@ -15,27 +15,27 @@ const Navbar = () => {
   };
   const links = (
     <>
-      <NavLink className="hover:text-[#e9631a]" to="/">
+      <NavLink className="hover:text-black" to="/">
         Home
       </NavLink>
-      <NavLink className="hover:text-[#e9631a]" to="/availableCars">
+      <NavLink className="hover:text-black" to="/availableCars">
         Available Cars
       </NavLink>
       {user && (
         <>
-          <NavLink className="hover:text-[#e9631a]" to="/addCar">
+          <NavLink className="hover:text-black" to="/addCar">
             Add Car
           </NavLink>
-          <NavLink className="hover:text-[#e9631a]" to="/myCar">
+          <NavLink className="hover:text-black" to="/myCar">
             My Car
           </NavLink>
-          <NavLink className="hover:text-[#e9631a]" to="/myBookings">
+          <NavLink className="hover:text-black" to="/myBookings">
             My Bookings
           </NavLink>
         </>
       )}
       {user ? (
-        <Link className="hover:text-[#e9631a]" onClick={handleSignOut}>
+        <Link className="hover:text-black" onClick={handleSignOut}>
           Logout
         </Link>
       ) : (
@@ -45,12 +45,12 @@ const Navbar = () => {
   );
   return (
     <div>
-      <div className="navbar p-0 bg-base-100 lg:w-11/12 mx-auto">
+      <div className="navbar p-0 lg:w-11/12 mx-auto">
         <div className="w-full flex justify-between lg:justify-start lg:w-[20%]">
           <Link className="h-10 flex" to="/">
             <img className="h-full" src={logo} alt="" />
             <p className="font-semibold text-lg pt-2">
-              <span className="text-orange-500">R</span>entify Cars
+              <span className="text-black">R</span>entify Cars
             </p>
           </Link>
           <div className="dropdown z-50">

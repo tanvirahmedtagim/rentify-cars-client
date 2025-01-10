@@ -2,7 +2,7 @@ import React from "react";
 
 const SpecialOffers = () => {
   return (
-    <section className="w-11/12 mx-auto bg-gray-100 mb-8">
+    <section className=" my-12">
       <div className=" mx-auto ">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Special Offers
