@@ -72,7 +72,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm right-0 dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu menu-sm right-0 dropdown-content bg-orange-500 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               {links}
             </ul>
@@ -83,32 +83,34 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <div className=" lg:block hidden w-[10%]">
-          {" "}
-          {user && (
-            <div className="flex gap-3 items-center">
-              <div className="dropdown">
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className="btn btn-ghost btn-circle"
-                >
+        <div className="lg:block hidden w-[10%]">
+          <div className=" flex justify-end ">
+            {" "}
+            {user && (
+              <div className="flex gap-3 items-center">
+                <div className="dropdown">
                   <div
-                    className="w-10 h-10 rounded-full tooltip tooltip-bottom"
-                    data-tooltip-id="my-tooltip"
-                    data-tooltip-content={user?.displayName}
-                    data-tooltip-place="top"
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-ghost btn-circle"
                   >
-                    <img
-                      className="w-full h-full rounded-full"
-                      src={user?.photoURL}
-                      alt="User"
-                    />
+                    <div
+                      className="w-10 h-10 rounded-full tooltip tooltip-bottom"
+                      data-tooltip-id="my-tooltip"
+                      data-tooltip-content={user?.displayName}
+                      data-tooltip-place="top"
+                    >
+                      <img
+                        className="w-full h-full rounded-full"
+                        src={user?.photoURL}
+                        alt="User"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>
