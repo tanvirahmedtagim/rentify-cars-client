@@ -31,8 +31,8 @@ const RecentCars = () => {
   }, []);
 
   return (
-    <div className="mt-12">
-      <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+    <div className="mt-12" id="recentCars">
+      <h2 className="text-3xl font-bold text-center uppercase text-gray-800 mb-8">
         Recent Cars
       </h2>
       <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

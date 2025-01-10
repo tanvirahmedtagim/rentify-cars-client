@@ -29,7 +29,7 @@ const WhyChooseUs = () => {
   ];
   return (
     <div>
-      <section className="mt-12">
+      <section className="mt-12" id="whyChooseUs">
         <div className="mx-auto text-center">
           <h2 className="text-3xl font-bold mb-8 text-gray-800">
             Why Choose Us?

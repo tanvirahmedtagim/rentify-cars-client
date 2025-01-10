@@ -42,9 +42,9 @@ const renderStars = (rating) => {
 export default function UserTestimonials() {
   return (
     <>
-      <section className=" mt-12">
+      <section className=" mt-12" id="testimonial">
         <div className="main gap-4 flex flex-col justify-center">
-          <div className="head-p text-black text-center font-bold text-3xl mb-4">
+          <div className="head-p text-black uppercase text-center font-bold text-3xl mb-4">
             <h1>What Our Customers Say</h1>
           </div>
 

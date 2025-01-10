@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 
 const Banner = () => {
   return (
-    <div className="relative w-full h-[500px]  rounded-2xl">
+    <div id="banner" className="relative w-full h-[200px] md:h-[300px] lg:h-[500px]  rounded-2xl">
       {/* Background Image/Video */}
       <div className="absolute w-full inset-0 rounded-2xl">
         <img
           src="https://i.ibb.co.com/4pq9rKj/car3.jpg"
           alt="Premium Cars"
-          className="w-full h-full rounded-2xl object-cover"
+          className="w-full h-full  rounded-2xl object-cover"
         />
         {/* Uncomment below and replace with video URL if using video */}
         {/* <video

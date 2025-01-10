@@ -6,6 +6,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
+import sideLogo from "../assets/login.jpg";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -65,71 +66,90 @@ const Register = () => {
   };
   return (
     <div>
-      <div className="hero  min-h-screen">
-        <div className="card bg-base-200 w-full max-w-sm shrink-0 shadow-2xl">
-          <form onSubmit={handleSubmit} className="card-body pb-4">
-            <h1 className="text-2xl font-bold text-center">
-              Register Your Account
-            </h1>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Name</span>
-              </label>
-              <input
-                name="name"
-                type="text"
-                placeholder="name"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                name="email"
-                type="email"
-                placeholder="email"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Photo Url</span>
-              </label>
-              <input
-                name="photo"
-                type="text"
-                placeholder="Photo Url"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control relative">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
-              <input
-                name="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="password"
-                className="input input-bordered"
-                required
-              />
-              <span
-                onClick={() => setShowPassword(!showPassword)}
-                className="cursor-pointer absolute bottom-4 right-3 "
-              >
-                {showPassword ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>}
-              </span>
-            </div>
-            <div className="form-control mt-6">
-              <button className="btn btn-primary">Register</button>
-            </div>
-            {error && <p className="text-red-500">{error}</p>}
-          </form>
+      <div className="min-h-screen w-full flex items-center justify-center  bg-gray-50">
+        <div className="w-full max-w-4xl md:flex-row flex-col bg-white shadow-lg rounded-lg flex overflow-hidden">
+          {" "}
+          {/* Left Side - Image */}
+          <div className="md:w-1/2 w-full mb-6 md:mb-0  md:flex items-center justify-center bg-gray-100">
+            <img
+              src={sideLogo}
+              alt="Side Illustration"
+              className="w-full h-full"
+            />
+          </div>
+          <div className="w-full md:w-1/2">
+            <form onSubmit={handleSubmit} className="card-body pb-4">
+              <h1 className="text-2xl font-bold text-center">
+                Register Our Account
+              </h1>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Name</span>
+                </label>
+                <input
+                  name="name"
+                  type="text"
+                  placeholder="name"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Email</span>
+                </label>
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="email"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Photo Url</span>
+                </label>
+                <input
+                  name="photo"
+                  type="text"
+                  placeholder="Photo Url"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
+              <div className="form-control relative">
+                <label className="label">
+                  <span className="label-text">Password</span>
+                </label>
+                <input
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="password"
+                  className="input input-bordered"
+                  required
+                />
+                <span
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="cursor-pointer absolute bottom-4 right-3 "
+                >
+                  {showPassword ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>}
+                </span>
+              </div>
+              <div className="form-control mt-6">
+                <button className="btn text-white hover:bg-orange-600 bg-orange-500">
+                  Register
+                </button>
+              </div>
+              {error && <p className="text-red-500">{error}</p>}
+            </form>
+            <p className="text-center text-orange-500 pb-4">
+              Already Have An Account?
+              <Link className="font-bold text-gray-700" to="/login">
+                Login
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
       <ToastContainer></ToastContainer>

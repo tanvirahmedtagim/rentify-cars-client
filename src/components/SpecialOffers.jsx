@@ -2,9 +2,9 @@ import React from "react";
 
 const SpecialOffers = () => {
   return (
-    <section className=" my-12">
+    <section className=" my-12" >
       <div className=" mx-auto ">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+        <h2 className="text-3xl uppercase font-bold text-center text-gray-800 mb-8">
           Special Offers
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">

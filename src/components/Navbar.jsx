@@ -45,7 +45,7 @@ const Navbar = () => {
   );
   return (
     <div>
-      <div className="navbar p-0 lg:w-11/12 mx-auto">
+      <div className="navbar p-0 lg:w-11/12 lg:px-0 md:px-8 px-3 mx-auto">
         <div className="w-full flex justify-between lg:justify-start lg:w-[20%]">
           <Link className="h-10 flex" to="/">
             <img className="h-full" src={logo} alt="" />
@@ -78,10 +78,37 @@ const Navbar = () => {
             </ul>
           </div>
         </div>
-        <div className=" hidden lg:flex  items-center  lg:w-[80%]">
+        <div className=" hidden lg:flex  items-center  lg:w-[70%]">
           <ul className="menu menu-horizontal gap-5 pl-64 text-lg px-1  ">
             {links}
           </ul>
+        </div>
+        <div className=" lg:block hidden w-[10%]">
+          {" "}
+          {user && (
+            <div className="flex gap-3 items-center">
+              <div className="dropdown">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle"
+                >
+                  <div
+                    className="w-10 h-10 rounded-full tooltip tooltip-bottom"
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content={user?.displayName}
+                    data-tooltip-place="top"
+                  >
+                    <img
+                      className="w-full h-full rounded-full"
+                      src={user?.photoURL}
+                      alt="User"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

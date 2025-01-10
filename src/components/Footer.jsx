@@ -59,36 +59,36 @@ const Footer = () => {
             <h3 className="text-orange-500 font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link
-                  to="/"
+                <a
+                  href="#banner"
                   className="hover:text-orange-400 transition duration-200"
                 >
                   Homepage
-                </Link>
+                </a>
               </li>
               <li>
-                <Link
-                  to="/"
+                <a
+                  href="#whyChooseUs"
                   className="hover:text-orange-400 transition duration-200"
                 >
-                  About Us
-                </Link>
+                  Why Choose Us
+                </a>
               </li>
               <li>
-                <Link
-                  to="/"
+                <a
+                  href="#recentCars"
                   className="hover:text-orange-400 transition duration-200"
                 >
-                  Services
-                </Link>
+                  Recent Cars
+                </a>
               </li>
               <li>
-                <Link
-                  to="/"
+                <a
+                  href="#testimonial"
                   className="hover:text-orange-400 transition duration-200"
                 >
-                  Contact
-                </Link>
+                  Testimonial
+                </a>
               </li>
             </ul>
           </div>
@@ -97,38 +97,10 @@ const Footer = () => {
           <div>
             <h3 className="text-orange-500 font-semibold mb-4">Our Services</h3>
             <ul className="space-y-2">
-              <li>
-                <Link
-                  to="/"
-                  className="hover:text-orange-400 transition duration-200"
-                >
-                  Business Rental
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/"
-                  className="hover:text-orange-400 transition duration-200"
-                >
-                  Airport Transfer
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/"
-                  className="hover:text-orange-400 transition duration-200"
-                >
-                  Travel Rental
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/"
-                  className="hover:text-orange-400 transition duration-200"
-                >
-                  Luxury Rental
-                </Link>
-              </li>
+              <li>Business Rental</li>
+              <li>Airport Transfer</li>
+              <li>Travel Rental</li>
+              <li>Luxury Rental</li>
             </ul>
           </div>
 
