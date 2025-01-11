@@ -116,11 +116,11 @@ const MyBookings = () => {
   };
 
   const chartData = {
-    labels: bookings.map((booking) => booking.carModel), 
+    labels: bookings.map((booking) => booking.carModel),
     datasets: [
       {
         label: "Daily Rental Price ($)",
-        data: bookings.map((booking) => booking.rentalPrice), 
+        data: bookings.map((booking) => booking.rentalPrice),
         fill: false,
         borderColor: "rgba(75,192,192,1)",
         tension: 0.1,
@@ -130,8 +130,11 @@ const MyBookings = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center mt-40">
-        <span className="loading loading-spinner text-info loading-lg"></span>
+      <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-80">
+        <div className="relative w-16 h-16">
+          <div className="absolute inset-0 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+          <div className="absolute inset-2 border-4 border-deep-gray border-b-transparent rounded-full animate-[spin_1s_linear_reverse]"></div>
+        </div>
       </div>
     );
   }
@@ -140,7 +143,9 @@ const MyBookings = () => {
     <div className="overflow-x-auto lg:w-11/12 mx-auto p-4">
       {/* Render the chart */}
       <div className="mb-6">
-        <h2 className="text-xl text-center font-bold mb-4">Car Daily Rental Prices Chart</h2>
+        <h2 className="text-xl text-center font-bold mb-4">
+          Car Daily Rental Prices Chart
+        </h2>
         <Line data={chartData} options={{ responsive: true }} />
       </div>
 

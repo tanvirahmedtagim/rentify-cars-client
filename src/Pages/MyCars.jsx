@@ -119,8 +119,11 @@ const MyCars = () => {
       </div>
 
       {loading ? (
-        <div className="text-center">
-          <span className="loading loading-spinner text-info"></span>
+        <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-80">
+          <div className="relative w-16 h-16">
+            <div className="absolute inset-0 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+            <div className="absolute inset-2 border-4 border-deep-gray border-b-transparent rounded-full animate-[spin_1s_linear_reverse]"></div>
+          </div>
         </div>
       ) : myCars.length === 0 ? (
         <div className="text-center">

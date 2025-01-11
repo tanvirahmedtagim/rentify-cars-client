@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import {
   FaMapMarkerAlt,
@@ -8,8 +8,10 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../provider/AuthProvider";
 
 const AvailableCars = () => {
+  const { loading,setLoading } = useContext(AuthContext);
   const [cars, setCars] = useState([]);
   const [view, setView] = useState("grid");
   const [searchQuery, setSearchQuery] = useState("");
