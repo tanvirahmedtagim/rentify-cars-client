@@ -58,7 +58,7 @@ export default function UserTestimonials() {
             modules={[FreeMode, Pagination]}
             className="mySwiper w-full"
             breakpoints={{
-              640: {
+              320: {
                 slidesPerView: 1,
                 spaceBetween: 20,
               },
