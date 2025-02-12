@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
 import {
   FaCar,
   FaDollarSign,
@@ -18,7 +19,7 @@ const RecentCars = () => {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/cars/recent`,
           {
-            withCredentials: true, // Include cookies
+            withCredentials: true,
           }
         );
         setRecentCars(response.data);
@@ -31,15 +32,26 @@ const RecentCars = () => {
   }, []);
 
   return (
-    <div className="mt-12" id="recentCars">
-      <h2 className="text-3xl font-bold text-center uppercase text-gray-800 mb-8">
+    <div className="mt-12 px-4 sm:px-8" id="recentCars">
+      {/* Animated Heading */}
+      <motion.h2
+        className="text-3xl font-bold text-center uppercase text-gray-800 mb-8"
+        initial={{ opacity: 0, y: -30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         Recent Cars
-      </h2>
-      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {recentCars.map((car) => (
-          <div
+      </motion.h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {recentCars.map((car, index) => (
+          <motion.div
             key={car._id}
-            className="card bg-orange-100 border border-orange-300 shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105"
+            className="card bg-orange-100 border border-orange-300 shadow-lg rounded-lg overflow-hidden"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+            viewport={{ once: false, amount: 0.2 }}
           >
             <img
               src={car.imageUrl}
@@ -75,7 +87,7 @@ const RecentCars = () => {
                 </span>
               </p>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
