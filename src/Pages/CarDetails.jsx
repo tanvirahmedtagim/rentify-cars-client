@@ -129,7 +129,7 @@ const CarDetails = () => {
             <p className="text-base lg:text-lg text-black mb-4">
               Price Per Day: ${rentalPrice}
             </p>
-            <p className="text-bold lg:text-lg p-3 w-48 rounded-xl text-white bg-[#11ba11] mb-4">
+            <p className="text-bold lg:text-lg p-3 text-center w-48 rounded-xl text-white bg-[#11ba11] mb-4">
               Availability: {availability ? "Available" : "Unavailable"}
             </p>
             <h4 className="font-medium text-lg lg:text-xl mb-2">Features:</h4>
