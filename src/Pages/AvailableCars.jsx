@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   FaMapMarkerAlt,
@@ -8,21 +8,31 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../provider/AuthProvider";
 
 const AvailableCars = () => {
-  const { loading,setLoading } = useContext(AuthContext);
   const [cars, setCars] = useState([]);
   const [view, setView] = useState("grid");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("");
+  const [loading, setLoading] = useState(true); // Local loading state
 
   useEffect(() => {
-    // Fetch all cars from the backend
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/cars`)
-      .then((response) => setCars(response.data))
-      .catch((error) => console.error("Error fetching cars:", error));
+    const fetchCars = async () => {
+      setLoading(true); // Start loading state
+
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/cars`
+        );
+        setCars(response.data);
+      } catch (error) {
+        console.error("Error fetching cars:", error);
+      } finally {
+        setLoading(false); // End loading state after API call (whether success or error)
+      }
+    };
+
+    fetchCars();
   }, []);
 
   // Filter out unavailable cars and apply search query
@@ -57,113 +67,129 @@ const AvailableCars = () => {
 
   return (
     <div className="p-4">
-      {/* Search, Sort, and Toggle Controls */}
-      <div className="flex md:flex-row flex-col gap-3 justify-between items-center md:mb-4">
-        {/* Search Bar */}
-        <input
-          type="text"
-          placeholder="Search by car model or location"
-          className="border p-2 w-full rounded md:w-1/2"
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-
-        <div className="flex md:flex-row flex-col justify-end gap-3 w-full md:w-1/2 md:space-x-2">
-          {/* Sort Dropdown */}
-          <select
-            onChange={(e) => setSortOption(e.target.value)}
-            className="border p-2 rounded"
-          >
-            <option value="">Sort By</option>
-            <option value="carModel">Car Model</option>
-            <option value="location">Location</option>
-            <option value="rentalPriceAsc">Price: Lowest First</option>
-            <option value="rentalPriceDesc">Price: Highest First</option>
-            <option value="dateAddedNewest">Date Added: Newest First</option>
-            <option value="dateAddedOldest">Date Added: Oldest First</option>
-            <option value="bookingCount">Booking Count</option>
-          </select>
-
-          {/* Toggle View Button */}
-          <button
-            onClick={() => setView(view === "grid" ? "list" : "grid")}
-            className="bg-orange-500 text-white p-2 rounded hover:bg-orange-600"
-          >
-            Toggle to {view === "grid" ? "List" : "Grid"} View
-          </button>
+      {/* Loading Spinner */}
+      {loading ? (
+        <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-80">
+          <div className="relative w-16 h-16">
+            <div className="absolute inset-0 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+            <div className="absolute inset-2 border-4 border-deep-gray border-b-transparent rounded-full animate-[spin_1s_linear_reverse]"></div>
+          </div>
         </div>
-      </div>
+      ) : (
+        <>
+          {/* Search, Sort, and Toggle Controls */}
+          <div className="flex md:flex-row flex-col gap-3 justify-between items-center md:mb-4">
+            {/* Search Bar */}
+            <input
+              type="text"
+              placeholder="Search by car model or location"
+              className="border p-2 w-full rounded md:w-1/2"
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
 
-      {/* Cars Display */}
-      <div
-        className={`grid ${
-          view === "grid"
-            ? "lg:grid-cols-4 md:grid-cols-2 gap-4"
-            : "grid-cols-1 gap-4"
-        }`}
-      >
-        {sortedCars.map((car) => (
+            <div className="flex md:flex-row flex-col justify-end gap-3 w-full md:w-1/2 md:space-x-2">
+              {/* Sort Dropdown */}
+              <select
+                onChange={(e) => setSortOption(e.target.value)}
+                className="border p-2 rounded"
+              >
+                <option value="">Sort By</option>
+                <option value="carModel">Car Model</option>
+                <option value="location">Location</option>
+                <option value="rentalPriceAsc">Price: Lowest First</option>
+                <option value="rentalPriceDesc">Price: Highest First</option>
+                <option value="dateAddedNewest">
+                  Date Added: Newest First
+                </option>
+                <option value="dateAddedOldest">
+                  Date Added: Oldest First
+                </option>
+                <option value="bookingCount">Booking Count</option>
+              </select>
+
+              {/* Toggle View Button */}
+              <button
+                onClick={() => setView(view === "grid" ? "list" : "grid")}
+                className="bg-orange-500 text-white p-2 rounded hover:bg-orange-600"
+              >
+                Toggle to {view === "grid" ? "List" : "Grid"} View
+              </button>
+            </div>
+          </div>
+
+          {/* Cars Display */}
           <div
-            key={car._id}
-            className={`p-4 rounded-lg shadow-lg ${
-              view === "list"
-                ? "flex flex-row items-center space-x-4 bg-orange-100"
-                : "flex flex-col bg-orange-100"
+            className={`grid ${
+              view === "grid"
+                ? "lg:grid-cols-4 md:grid-cols-2 gap-4"
+                : "grid-cols-1 gap-4"
             }`}
           >
-            {/* Image */}
-            {car.imageUrl && (
-              <img
-                src={car.imageUrl}
-                alt={car.carModel}
-                className={`rounded-lg ${
-                  view === "list" ? "w-24 h-24" : "w-full h-48"
-                } object-cover`}
-              />
-            )}
-
-            {/* Car Details */}
-            <div className="flex-1">
-              <h2 className="text-xl font-bold flex items-center text-orange-700">
-                <FaCar className="mr-2" /> {car.carModel || "Unknown Model"}
-              </h2>
-              <p className="flex items-center text-gray-700">
-                <FaDollarSign className="mr-2 text-orange-500" />
-                Rental Price: ${car.rentalPrice || "N/A"} / day
-              </p>
-              <p className="flex items-center text-gray-700">
-                <FaMapMarkerAlt className="mr-2 text-orange-500" />
-                Location: {car.location || "Unknown"}
-              </p>
-              <p className="flex items-center text-gray-700">
-                {car.availability ? (
-                  <>
-                    <FaCheck className="mr-2 text-green-500" /> Available
-                  </>
-                ) : (
-                  <>
-                    <FaTimes className="mr-2 text-red-500" /> Not Available
-                  </>
+            {sortedCars.map((car) => (
+              <div
+                key={car._id}
+                className={`p-4 rounded-lg shadow-lg ${
+                  view === "list"
+                    ? "flex flex-row items-center space-x-4 bg-orange-100"
+                    : "flex flex-col bg-orange-100"
+                }`}
+              >
+                {/* Image */}
+                {car.imageUrl && (
+                  <img
+                    src={car.imageUrl}
+                    alt={car.carModel}
+                    className={`rounded-lg ${
+                      view === "list" ? "w-24 h-24" : "w-full h-48"
+                    } object-cover`}
+                  />
                 )}
-              </p>
-              <p className="flex items-center text-gray-700">
-                <FaCar className="mr-2 text-purple-500" />
-                Booking Count: {car.bookingCount}
-              </p>
-              <p className="text-gray-600">
-                {car.description || "No description available."}
-              </p>
-            </div>
 
-            {/* Book Now Button */}
-            <Link
-              to={`/cars/${car._id}`}
-              className="bg-orange-500 text-xl font-semibold text-center text-white px-4 py-2 mt-4 rounded hover:bg-orange-600"
-            >
-              Book Now
-            </Link>
+                {/* Car Details */}
+                <div className="flex-1">
+                  <h2 className="text-xl font-bold flex items-center text-orange-700">
+                    <FaCar className="mr-2" /> {car.carModel || "Unknown Model"}
+                  </h2>
+                  <p className="flex items-center text-gray-700">
+                    <FaDollarSign className="mr-2 text-orange-500" />
+                    Rental Price: ${car.rentalPrice || "N/A"} / day
+                  </p>
+                  <p className="flex items-center text-gray-700">
+                    <FaMapMarkerAlt className="mr-2 text-orange-500" />
+                    Location: {car.location || "Unknown"}
+                  </p>
+                  <p className="flex items-center text-gray-700">
+                    {car.availability ? (
+                      <>
+                        <FaCheck className="mr-2 text-green-500" /> Available
+                      </>
+                    ) : (
+                      <>
+                        <FaTimes className="mr-2 text-red-500" /> Not Available
+                      </>
+                    )}
+                  </p>
+                  <p className="flex items-center text-gray-700">
+                    <FaCar className="mr-2 text-purple-500" />
+                    Booking Count: {car.bookingCount}
+                  </p>
+                  <p className="text-gray-600">
+                    {car.description || "No description available."}
+                  </p>
+                </div>
+
+                {/* Book Now Button */}
+                <Link
+                  to={`/cars/${car._id}`}
+                  className="bg-orange-500 text-xl font-semibold text-center text-white px-4 py-2 mt-4 rounded hover:bg-orange-600"
+                >
+                  Book Now
+                </Link>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+      )}
     </div>
   );
 };
